@@ -1,0 +1,33 @@
+
+
+<div class="card card-primary">
+    <div class="card-header">
+      <h3 class="card-title">Tạo bài viết</h3>
+    </div>
+    <!-- /.card-header -->
+    <!-- form start -->
+    <form action="/admin/articles/create" method="POST">
+      <div class="card-body">
+        <div class="form-group">
+          <label for="title">Tiêu đề:</label>
+          <input type="text" class="form-control" name="title" required minlength="20" maxlength="100">
+        </div>
+        <div class="form-group">
+            <label for="author">Tác giả:</label>
+            <input type="text" class="form-control" name="author" required><br>
+        </div>
+        <div class="form-group">
+            <label for="content">Nội dung:</label>
+        <textarea name="content" class="form-control" required></textarea><br>
+        </div>
+      <!-- /.card-body -->
+
+        <div class="card-footer">
+            <button type="submit" class="btn btn-primary">Lưu Bài viết</button>
+        </div>
+        <div class="card-footer">
+            <button type="submit" class="btn btn-primary"><a href="/admin/articles" style="color: white;">Quay lại</a>
+            </button>
+        </div>
+    </form>
+  </div> 
