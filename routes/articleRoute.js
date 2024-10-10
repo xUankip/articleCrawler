@@ -7,7 +7,9 @@ const userController = require('../controllers/userController');
 router.get('/', async (req, res) => {
   await articleController.getArticles(req, res);
 });
-
+router.get('/users', async (req, res) => {
+  await userController.getArticles(req, res);
+});
 
 // Create article
 router.get('/create', articleController.createArticleForm);

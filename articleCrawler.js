@@ -21,7 +21,7 @@ async function ArticleDetail(link) {
 
         const description = $('p.description').text().trim(); // Lấy mô tả từ thẻ p với class description
         const author = $('article.fck_detail p[style="text-align:right"]').text().trim(); // Lấy tên tác giả
-        const thumbnail = $('article figure[data-size] img').attr('src'); // Lấy link ảnh từ thẻ img
+        const thumbnail = $('article figure[data-size] img').attr('data-src'); // Lấy link ảnh từ thẻ img
         const content = $('article.fck_detail p').text().trim(); // Lấy nội dung từ các thẻ p
 
         return {
