@@ -3,10 +3,7 @@ const request = require('request-promise');
 const mongoose = require('mongoose');
 const Article = require('./models/article');
 const cron = require('node-cron');
-mongoose.connect('mongodb://localhost:27017/article', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-});
+mongoose.connect('mongodb://localhost:27017/article');
 
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));

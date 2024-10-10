@@ -1,16 +1,69 @@
 <style>
     .table {
+        table-layout: fixed; /* Đảm bảo các cột có kích thước cố định */
+        width: 100%;
+    }
+
+    .table th, .table td {
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        vertical-align: middle;
+    }
+
+    .table img {
+        width: 100%;
+        height: auto;
+        max-height: 150px;
+        object-fit: cover;
+        display: block;
+    }
+
+    /* Giới hạn chiều rộng các cột nội dung */
+    td {
         max-width: 150px; /* Giới hạn chiều rộng của ô */
+        word-wrap: break-word; /* Chia nhỏ từ dài để xuống dòng nếu cần */
         white-space: nowrap; /* Ngăn nội dung xuống dòng */
         overflow: hidden; /* Ẩn nội dung tràn */
-        text-overflow: ellipsis; /* Hiển thị dấu "..." */
-        object-fit: cover; /* Giữ cho hình ảnh lấp đầy khung nhưng không biến dạng */
-
+        text-overflow: ellipsis; /* Hiển thị dấu "..." khi nội dung quá dài */
     }
-    img {
-        width: 100%;
-        max-height: 150px;
-        object-fit: contain;
+
+    /* Tăng chiều rộng của ô thao tác */
+    td.actions {
+        white-space: nowrap;
+        max-width: 200px; /* Tăng chiều rộng của cột chứa các nút */
+        overflow: visible; /* Hiển thị đầy đủ các nút */
+    }
+
+    /* Hiệu ứng nút */
+    td .btn {
+        margin: 2px;
+        transition: all 0.3s ease;
+    }
+
+    td .btn:hover {
+        transform: scale(1.05);
+    }
+
+    /* Hiệu ứng cho pagination */
+    .pagination .page-link {
+        color: #007bff;
+        transition: background-color 0.2s ease;
+    }
+
+    .pagination .page-link:hover {
+        background-color: #007bff;
+        color: #fff;
+    }
+
+    .pagination .page-item.active .page-link {
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+
+    .table-responsive {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
     }
 </style>
 <div class="container my-5">
@@ -21,18 +74,17 @@
         <div class="card-body">
             <a href="/admin/articles/create" class="btn btn-primary mb-3">Tạo bài viết mới</a>
             <div class="table-responsive">
-                <table class="table table-bordered" width="100%" cellspacing="0">
+                <table class="table table-bordered" cellspacing="0">
                     <thead>
                     <tr>
                         <th>Tiêu đề</th>
                         <th>Tác giả</th>
-                        <th>Slug</th>
                         <th>Link ảnh</th>
                         <th>Mô tả</th>
                         <th>Link Bài viết gốc</th>
                         <th>Ngày tạo</th>
                         <th>Trạng thái</th>
-                        <th>Thao tác</th>
+                        <th>Thao tác</th> <!-- Cột thao tác -->
                     </tr>
                     </thead>
                     <tbody>
@@ -41,15 +93,14 @@
                             <tr>
                                 <td><%= article.title %></td>
                                 <td><%= article.author %></td>
-                                <td><%= article.slug%></td>
-                                <td><%= article.thumbnail%></td>
-                                <td><%= article.description%></td>
-                                <td><%= article.originalLink%></td>
-                                <td><%= article.createdAt%></td>
+                                <td><img src="<%= article.thumbnail %>" alt="Thumbnail"></td>
+                                <td><%= article.description %></td>
+                                <td><a href="<%= article.originalLink %>" target="_blank">Xem bài viết</a></td>
+                                <td><%= new Date(article.createdAt).toLocaleDateString() %></td>
                                 <td><%= article.status %></td>
-                                <td>
+                                <td class="actions"> <!-- Ô thao tác -->
                                     <a href="/admin/articles/edit/<%= article._id %>" class="btn btn-warning btn-sm">Chỉnh sửa</a>
-                                    <form action="/admin/articles/delete/<%= article._id %>" method="POST" style="display:inline;">
+                                    <form action="/admin/articles/delete/<%= article._id %>" method="POST" style="display:inline;" onsubmit="return confirmDelete();">
                                         <button type="submit" class="btn btn-danger btn-sm">Xóa</button>
                                     </form>
                                 </td>
@@ -57,12 +108,13 @@
                         <% }); %>
                     <% } else { %>
                         <tr>
-                            <td colspan="4" class="text-center">Không có bài viết nào.</td>
+                            <td colspan="9" class="text-center">Không có bài viết nào.</td>
                         </tr>
                     <% } %>
                     </tbody>
                 </table>
             </div>
+
             <nav>
                 <ul class="pagination justify-content-center">
                     <% if (currentPage > 1) { %>
@@ -89,3 +141,8 @@
         </div>
     </div>
 </div>
+<script>
+    function confirmDelete() {
+        return confirm("Bạn có chắc chắn muốn xóa bài viết này không?");
+    }
+</script>
