@@ -73,6 +73,22 @@
         </div>
         <div class="card-body">
             <a href="/admin/articles/create" class="btn btn-primary mb-3">Tạo bài viết mới</a>
+            <form action="/admin/articles" method="GET" class="mb-4">
+                <div class="form-row align-items-end">
+                    <div class="col">
+                        <input type="text" name="searchTitle" class="form-control" placeholder="Tìm theo tiêu đề">
+                    </div>
+                    <div class="col">
+                        <input type="text" name="searchAuthor" class="form-control" placeholder="Tìm theo tác giả">
+                    </div>
+                    <div class="col">
+                        <input type="text" id="dateRange" name="searchDate" class="form-control" placeholder="Chọn khoảng thời gian" />
+                    </div>
+                    <div class="col">
+                        <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+                    </div>
+                </div>
+            </form>
             <div class="table-responsive">
                 <table class="table table-bordered" cellspacing="0">
                     <thead>
@@ -141,6 +157,16 @@
         </div>
     </div>
 </div>
+<script>
+    $(function() {
+        $('#dateRange').daterangepicker({
+            opens: 'left',
+            locale: {
+                format: 'YYYY-MM-DD' // Định dạng ngày
+            }
+        });
+    });
+</script>
 <script>
     function confirmDelete() {
         return confirm("Bạn có chắc chắn muốn xóa bài viết này không?");
