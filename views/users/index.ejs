@@ -3,20 +3,24 @@
                 <div class="row">
                         <div class="col-lg-9">
                                 <div class="row">
-                                        <% if (articles && articles.length) { %>
-                                                <% articles.forEach(article => { %>
-                                                        <div class="col-md-4">
-                                                                <div class="mn-img">
-                                                                        <img src="">
-                                                                        <div class="mn-title">
-                                                                                <a href="/user/article/detail/<%= article._id %>"><%= article.title %></a>
-                                                                        </div>
-                                                                </div>
+                                    <% if (articles && articles.length) { %>
+                                        <% articles.forEach(article => { %>
+                                            <% if (article.status === 'approve' || article.status === 'pending') { %>
+                                                <div class="col-md-4">
+                                                    <div class="mn-img">
+                                                        <img src="<%= article.thumbnail %>" alt="<%= article.title %>">
+                                                        <div class="mn-title">
+                                                            <a href="/user/article/detail/<%= article._id %>">
+                                                                <%= article.title %>
+                                                            </a>
                                                         </div>
-                                                <% }); %>
-                                        <% } else { %>
-                                                <p>Không có bài viết nào.</p>
-                                        <% } %>
+                                                    </div>
+                                                </div>
+                                            <% } %>
+                                        <% }); %>
+                                    <% } else { %>
+                                        <p>Không có bài viết nào.</p>
+                                    <% } %>
                                 </div>
                         </div>
                 </div>
